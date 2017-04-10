@@ -1,7 +1,7 @@
 NAME = libft.a
 SRC_DIR = .
 OBJ_DIR = objs
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 CC = gcc $(FLAGS) $(INC)
 COLOR = \0033[1;35m
 
