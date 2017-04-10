@@ -1,55 +1,60 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: cde-laro <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/01/11 14:30:10 by cde-laro          #+#    #+#              #
-#    Updated: 2017/02/09 20:57:49 by cde-laro         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-.PHONY: all, clean, fclean, re
-
 NAME = fdf
+INC_DIR = includes
+OBJ_DIR = objs
+SRC_DIR = srcs
+LIB_DIR = libft
+MLX_DIR = minilibx_macos
+FLAGS = -Wall -Wextra -Werror
+INC = -I includes/
+LIB = -L $(LIB_DIR) -lft
+MLX = -L $(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+CC = gcc $(FLAGS) $(INC)
+COLOR = \0033[1;35m
 
-SRC = srcs/main.c \
-	  srcs/fdf_extract.c \
-	  srcs/fdf_init.c \
-	  srcs/fdf_draw.c \
-	  srcs/fdf_matrice.c \
-	  srcs/fdf_img_draw.c
+SRC_FT = fdf_color \
+		 fdf_color_pack \
+		 fdf_draw \
+		 fdf_extract \
+		 fdf_img_draw \
+		 fdf_init \
+		 fdf_key_hook \
+		 fdf_matrice \
+		 fdf_text_display \
+		 main
 
-LIB_NAME = libft.a
+OBJ = $(SRC_FT:%=$(OBJ_DIR)/%.o)
+SRC = $(SRC_FT:%=$(SRC_DIR)/%.c)
 
-LIB = libft/libft.a
+all: $(NAME)
+	@echo "$(COLOR)$(NAME)\t\t\t\0033[1;30m[All OK]\0033[0;37m"
 
-OBJ = main.o \
-	  fdf_extract.o \
-	  fdf_init.o \
-	  fdf_draw.o \
-	  fdf_matrice.o \
-	  fdf_img_draw.o
+$(OBJ_DIR):
+	@mkdir -p $@
+	@echo "$(COLOR)Creating: \t\t\0033[0;32m$@\0033[0;37m"
 
-INCLUDES = includes/
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@$(CC) -c $< -o $@
 
-CFLAGS = -lmlx -framework OpenGL -framework AppKit -Wall -Werror -Wextra
+$(NAME): $(OBJ_DIR) $(SRC)
+	@$(MAKE) $(OBJ)
+	@echo "$(COLOR)Objects of $(NAME)\t\t\0033[0;32m[Created]\0033[0;37m"
+	@make -j -C $(LIB_DIR)
+	@make -j -C $(MLX_DIR)
+	@$(CC) $(LIB) $(OBJ) $(MLX) -o $@
+	@echo "$(COLOR)$(NAME)\t\t\t\0033[0;32m[Created]\0033[0;37m"
 
-all : $(NAME)
+clean:
+	@rm -rf $(OBJ_DIR)
+	@make clean -C $(LIB_DIR)
+	@make clean -C $(MLX_DIR)
+	@echo "$(COLOR)Objects of $(NAME)\t\t\0033[0;31m[Deleted]\0033[0;37m"
 
-$(NAME) : $(LIB_NAME)
-	gcc -o $(NAME) $(SRC) $(LIB) $(CFLAGS) -I $(INCLUDES) 
+fclean: clean
+	@rm -f $(NAME)
+	@make fclean -C $(LIB_DIR)
+	@make fclean -C $(MLX_DIR)
+	@echo "$(COLOR)$(NAME)\t\t\t\0033[0;31m[Deleted]\0033[0;37m"
 
-$(LIB_NAME) :
-	make -C libft all
+re: fclean all
 
-clean :
-	make -C libft clean
-	rm -f $(OBJ)
-
-fclean : clean
-	make -C libft fclean
-	rm -f $(NAME)
-
-re : fclean all
+.PHONY: all clean fclean re

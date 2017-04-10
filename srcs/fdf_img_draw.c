@@ -6,20 +6,32 @@
 /*   By: cde-laro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 19:41:09 by cde-laro          #+#    #+#             */
-/*   Updated: 2017/02/09 20:58:49 by cde-laro         ###   ########.fr       */
+/*   Updated: 2017/02/18 14:17:04 by cde-laro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void		draw_line(t_env *e, t_point a, t_point b, int z)
+void	check_line(t_env *e, t_point a, t_point b, int z)
+{
+	if ((a.x < 0 && b.x < 0) || (a.y < 0 && b.y < 0))
+		return ;
+	if ((a.x > WIN_Y && b.x > WIN_Y) || (a.y > WIN_X && b.y > WIN_X))
+		return ;
+	if (z <= e->s->void_lvl && e->s->void_enabled)
+		return ;
+	draw_line(e, a, b, get_color(e, z));
+	pix_put_img(e, a.y, a.x, get_color(e, z));
+	pix_put_img(e, b.y, b.x, get_color(e, z));
+}
+
+void	draw_line(t_env *e, t_point a, t_point b, int z)
 {
 	t_point		d;
 	t_point		s;
 	int			e1;
 	int			e2;
 
-	z = 0;
 	d.x = ABS(b.x - a.x);
 	d.y = ABS(b.y - a.y);
 	s.x = (a.x < b.x ? 1 : -1);
@@ -27,7 +39,7 @@ void		draw_line(t_env *e, t_point a, t_point b, int z)
 	e1 = (d.x > d.y ? d.x : -d.y) / 2;
 	while (a.x != b.x || a.y != b.y)
 	{
-		pix_put_img(e, a.x, a.y, 0x00FFFFFF);
+		pix_put_img(e, a.y, a.x, z);
 		e2 = e1;
 		if (e2 > -d.x)
 		{

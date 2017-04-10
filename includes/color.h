@@ -6,7 +6,7 @@
 /*   By: cde-laro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/04 14:17:42 by cde-laro          #+#    #+#             */
-/*   Updated: 2017/02/04 18:31:49 by cde-laro         ###   ########.fr       */
+/*   Updated: 2017/02/12 15:55:55 by cde-laro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@
 # define ORANGE_2 0x00FF9933
 # define YELLOW 0x00FFFF00
 # define PURPLE 0x00CC33FF
+# define CYAN 0x0000FFFF
+# define PINK 0x00FF1493
 
 #endif

@@ -1,61 +1,104 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: cde-laro <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2016/11/09 13:55:00 by cde-laro          #+#    #+#              #
-#    Updated: 2017/01/20 15:14:04 by cde-laro         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = libft.a
+SRC_DIR = .
+OBJ_DIR = objs
+FLAGS = -Wall -Wextra -Werror
+CC = gcc $(FLAGS) $(INC)
+COLOR = \0033[1;35m
 
-SRC = ft_atoi.c ft_isalnum.c ft_bzero.c ft_isalpha.c ft_isascii.c ft_isdigit.c \
-	  ft_isprint.c ft_itoa.c ft_memalloc.c ft_memccpy.c ft_memchr.c \
-	  ft_memcmp.c ft_memcpy.c ft_memdel.c ft_memmove.c ft_memset.c \
-	  ft_putchar.c ft_putchar_fd.c ft_putendl.c ft_putendl_fd.c ft_putnbr.c \
-	  ft_putstr.c ft_strcat.c ft_putnbr_fd.c ft_putstr_fd.c ft_strchr.c \
-	  ft_strclr.c ft_strcmp.c ft_strcpy.c ft_strdel.c ft_strdup.c ft_strequ.c \
-	  ft_striter.c ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlen.c \
-	  ft_strmap.c ft_strmapi.c ft_strncat.c ft_strncmp.c ft_strncpy.c \
-	  ft_strnequ.c ft_strnew.c ft_strnstr.c ft_strrchr.c ft_strsplit.c \
-	  ft_strstr.c ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c \
-	  ft_lstadd.c ft_lstnew.c ft_lstdel.c ft_lstiter.c ft_lstdelone.c \
-	  ft_lstmap.c ft_countwords.c ft_puttab.c ft_puttab_fd.c ft_countchar.c \
-	  ft_countelem.c ft_strsplit_to_int.c ft_strtolower.c ft_strtoupper.c
+SRC_FT = ft_atoi \
+		 ft_isalnum \
+		 ft_bzero \
+		 ft_isalpha \
+		 ft_isascii \
+		 ft_isdigit \
+		 ft_isprint \
+		 ft_itoa \
+		 ft_memalloc \
+		 ft_memccpy \
+		 ft_memchr \
+		 ft_memcmp \
+		 ft_memcpy \
+		 ft_memdel \
+		 ft_memmove \
+		 ft_memset \
+		 ft_putchar \
+		 ft_putchar_fd \
+		 ft_putendl \
+		 ft_putendl_fd \
+		 ft_putnbr \
+		 ft_putstr \
+		 ft_strcat \
+		 ft_putnbr_fd \
+		 ft_putstr_fd \
+		 ft_strchr \
+		 ft_strclr \
+		 ft_strcmp \
+		 ft_strcpy \
+		 ft_strdel \
+		 ft_strdup \
+		 ft_strequ \
+		 ft_striter \
+		 ft_striteri \
+		 ft_strjoin \
+		 ft_strlcat \
+		 ft_strlen \
+		 ft_strmap \
+		 ft_strmapi \
+		 ft_strncat \
+		 ft_strncmp \
+		 ft_strncpy \
+		 ft_strnequ \
+		 ft_strnew \
+		 ft_strnstr \
+		 ft_strrchr \
+		 ft_strsplit \
+		 ft_strstr \
+		 ft_strsub \
+		 ft_strtrim \
+		 ft_tolower \
+		 ft_toupper \
+		 ft_lstadd \
+		 ft_lstnew \
+		 ft_lstdel \
+		 ft_lstiter \
+		 ft_lstdelone \
+		 ft_lstmap \
+		 ft_countwords \
+		 ft_puttab \
+		 ft_puttab_fd \
+		 ft_countchar \
+		 ft_countelem \
+		 ft_strsplit_to_int \
+		 ft_strtolower \
+		 ft_strtoupper
 
-OBJ = ft_atoi.o ft_isalnum.o ft_bzero.o ft_isalpha.o ft_isascii.o ft_isdigit.o \
-	  ft_isprint.o ft_itoa.o ft_memalloc.o ft_memccpy.o ft_memchr.o \
-	  ft_memcmp.o ft_memcpy.o ft_memdel.o ft_memmove.o ft_memset.o \
-	  ft_putchar.o ft_putchar_fd.o ft_putendl.o ft_putendl_fd.o ft_putnbr.o \
-	  ft_putstr.o ft_strcat.o ft_putnbr_fd.o ft_putstr_fd.o ft_strchr.o \
-	  ft_strclr.o ft_strcmp.o ft_strcpy.o ft_strdel.o ft_strdup.o ft_strequ.o \
-	  ft_striter.o ft_striteri.o ft_strjoin.o ft_strlcat.o ft_strlen.o \
-	  ft_strmap.o ft_strmapi.o ft_strncat.o ft_strncmp.o ft_strncpy.o \
-	  ft_strnequ.o ft_strnew.o ft_strnstr.o ft_strrchr.o ft_strsplit.o \
-	  ft_strstr.o ft_strsub.o ft_strtrim.o ft_tolower.o ft_toupper.o \
-	  ft_lstadd.o ft_lstnew.o ft_lstdel.o ft_lstiter.o ft_lstdelone.o \
-	  ft_lstmap.o ft_countwords.o ft_puttab.o ft_puttab_fd.o ft_countchar.o \
-	  ft_countelem.o ft_strsplit_to_int.o ft_strtolower.o ft_strtoupper.o
+OBJ = $(SRC_FT:%=$(OBJ_DIR)/%.o)
+SRC = $(SRC_FT:%=%.c)
 
-INCLUDE = libft.h
+all: $(NAME)
+	@echo "$(COLOR)$(NAME)\t\t\t\0033[1;30m[All OK]\0033[0;37m"
 
-all : $(NAME)
+$(OBJ_DIR):
+	@mkdir -p $@
 
-$(NAME) :
-	@echo "Start compilation"
-	@gcc -Wall -Werror -Wextra -c $(SRC) -I $(INCLUDE)
+$(OBJ_DIR)/%.o: %.c
+	@$(CC) -c $< -o $@
+
+$(NAME): $(OBJ_DIR) $(SRC)
+	@$(MAKE) $(OBJ)
+	@echo "$(COLOR)Objects of $(NAME)\t\0033[0;32m[Created]\0033[0;37m"
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
-	@echo "Compilation done"
+	@echo "$(COLOR)$(NAME)\t\t\t\0033[0;32m[Created]\0033[0;37m"
 
-clean : 
-	@rm -f $(OBJ)
-	@echo "Cleared"
+clean:
+	@rm -rf $(OBJ_DIR)
+	@echo "$(COLOR)Objects of $(NAME)\t\0033[0;31m[Deleted]\0033[0;37m"
 
-fclean : clean
+fclean: clean
 	@rm -f $(NAME)
+	@echo "$(COLOR)$(NAME)\t\t\t\0033[0;31m[Deleted]\0033[0;37m"
 
-re : fclean all
+re: fclean all
+
+.PHONY: all clean fclean re

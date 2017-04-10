@@ -6,7 +6,7 @@
 /*   By: cde-laro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 17:38:55 by cde-laro          #+#    #+#             */
-/*   Updated: 2017/02/09 21:15:37 by cde-laro         ###   ########.fr       */
+/*   Updated: 2017/03/20 21:16:37 by cde-laro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,50 @@ void		fdf_init_settings(t_env *e)
 {
 	e->s->size = 5;
 	e->s->ax = 0;
-	e->s->ay = 0.5;
+	e->s->ay = 0;
 	e->s->az = 0;
-	e->s->h = 1;
-	e->s->sx = 0;
-	e->s->sy = 0;
-	e->s->x = 50;
-	e->s->y = 50;
+	e->s->h = 10;
+	e->s->x = WIN_X / 2;
+	e->s->y = WIN_Y / 2;
 	e->s->water_enabled = 0;
 	e->s->water_lvl = 0;
 	e->s->void_enabled = 0;
 	e->s->void_lvl = -1;
 	e->s->display = 0;
-	e->s->color_preset = 0;
-	e->s->mode = 0;
+	e->s->color = 0;
+	e->s->mode = KEY_S;
+	e->s->diag = 0;
+}
 
+int			red_cross(int key, t_env *e)
+{
+	(void)key;
+	(void)*e;
+	exit(0);
+	return (0);
+}
+
+void		fdf_error(int code)
+{
+	ft_putstr("An error has occured: ");
+	ft_putnbr(code);
+	ft_putstr(" Leaving program...");
+	exit(-1);
 }
 
 void		fdf_init(t_env *e)
 {
-	e->mlx = mlx_init();
-	e->win = mlx_new_window(e->mlx, WIN_X, WIN_Y, e->name);
+	if (!(e->mlx = mlx_init()))
+		fdf_error(1);
+	if (!(e->win = mlx_new_window(e->mlx, WIN_X, WIN_Y, e->name)))
+		fdf_error(2);
 	e->drawed = 0;
-	e->s = (t_setting *)malloc(sizeof(t_setting));
-	e->img = (t_img *)malloc(sizeof(t_img));
+	if (!(e->s = (t_setting *)malloc(sizeof(t_setting))))
+		fdf_error(3);
+	if (!(e->img = (t_img *)malloc(sizeof(t_img))))
+		fdf_error(4);
 	fdf_init_settings(e);
 	fdf_init_img(e);
+	mlx_hook(e->win, 17, (1L << 17), red_cross, e);
+	mlx_hook(e->win, 2, 3, fdf_key_funct, e);
 }
