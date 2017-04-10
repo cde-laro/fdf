@@ -58,7 +58,7 @@ void		fdf_init(t_env *e)
 {
 	if (!(e->mlx = mlx_init()))
 		fdf_error(1);
-	if (!(e->win = mlx_new_window(e->mlx, WIN_X, WIN_Y, e->name)))
+	if (!(e->win = mlx_new_window(e->mlx, WIN_X, WIN_Y, "fractol")))
 		fdf_error(2);
 	e->drawed = 0;
 	if (!(e->s = (t_setting *)malloc(sizeof(t_setting))))

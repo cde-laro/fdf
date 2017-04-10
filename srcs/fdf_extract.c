@@ -113,7 +113,7 @@ t_map		*fdf_parse(char *path)
 	char		**tab;
 	int			fd;
 
-	if (!(map = (t_map *)malloc(sizeof(map))))
+	if (!(map = (t_map *)malloc(sizeof(t_map))))
 		return (NULL);
 	fd = open(path, O_RDONLY);
 	if (!(filecontent = fdf_extract(fd, path)))
